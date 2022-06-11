@@ -40,66 +40,88 @@ async def bot_message(message: types.Message):
     if message.text == "Подача документов":
         await message.answer(text= message.text, reply_markup=subtopicDoc)
         Data.set_part(1)
+        return
     if message.text == "Календарь приема":
         await message.answer(text=message.text, reply_markup=subtopicCalendar)
         Data.set_part(2)
+        return
     if message.text == "Особые категории":
         await  message.answer(text=message.text, reply_markup=subtopicCategory)
         Data.set_part(3)
+        return
     if message.text == "Направление":
         await message.answer(text=message.text, reply_markup=subtopicExams)
         Data.set_part(4)
+        return
     if message.text == "Экзамены":
         await message.answer(text=message.text, reply_markup=subtopicExams)
         Data.set_part(5)
+        return
     if message.text == "Оценить шансы":
         await message.answer(text=message.text, reply_markup=question1C)
         Data.set_part(6)
+        return
     if message.text == "Общежитие":
         await message.answer(text=message.text, reply_markup=question1Home)
         Data.set_part(7)
-
+        return
 
     #SUBTOPIC 1
     if message.text == "Как подать документы":
         await message.answer(text=message.text, reply_markup=subtopic1Que)
+        return
     if message.text == "Необходимый перечень документов":
         await message.answer(text=message.text, reply_markup=subtopic2Que)
+        return
     if message.text == "Заключить договор на обучение по контракту":
         await message.answer(text=message.text, reply_markup=subtopic3Que)
+        return
 
     if message.text == "Как подать согласие":
         await message.answer(text=message.text, reply_markup=subtopic4Que)
+        return
 
     #SUBTOPIC 2
     if message.text == "Основные даты":
         await message.answer(text=message.text, reply_markup=quesction1Cal)
+        return
     if message.text == "Расписание вступительных испытаний":
         await message.answer(text=message.text, reply_markup=quesction2Cal)
+        return
     if message.text == "Приказы о зачислении":
         await message.answer(text=message.text, reply_markup=quesction3Cal)
+        return
     if message.text == "Заселение в общежитие":
         await message.answer(text=message.text, reply_markup=quesction4Cal)
+        return
     #Subtopic 3
     if message.text == "Льготы":
          await message.answer(text=message.text, reply_markup=quesction1Cat)
+         return
     if message.text == "Поступление БВИ":
         await message.answer(text=message.text, reply_markup=quesction2Cat)
+        return
     if message.text == "Целевое обучение":
         await message.answer(text=message.text, reply_markup=quesction3Cat)
+        return
     if message.text == "Индивидуальные достижения":
         await message.answer(text=message.text, reply_markup=quesction4Cat)
+        return
     #Subtopic 4
     if message.text == "Направления":
         await message.answer(text=message.text, reply_markup=question1Dir)
+        return
 
     #Subtopic 5
     if message.text == "По EГЭ":
         await message.answer(text=message.text, reply_markup=question1Exam)
+        return
     if message.text == 'Вступительные испытания':
         await message.answer(text=message.text, reply_markup=question2Exam)
+        return
     if message.text == "Минимальные баллы":
         await message.answer(text=message.text, reply_markup=question3Exam)
+        return
 
 
     #Questions
@@ -113,6 +135,9 @@ async def bot_message(message: types.Message):
     else:
         answ = final.answer.get_answer(message.text, Data.get_part()) 
         # Отсылаем юзеру сообщение в его чат
-        await message.answer(text=answ[0]['answer'])
+        try:
+            await message.answer(text=answ[0]['answer'])
+        except:
+            await message.answer("Я вас не понял, попробуйте переформулировать вопрос.")
         Data.set_part(-1)
 
